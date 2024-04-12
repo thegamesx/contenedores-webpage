@@ -3,63 +3,61 @@ function App() {
 
   const userContainerInfo = [
     {
-      name: "000",
-      generalStatus: "Ok",
+      displayName: "000",
       temp: -10,
-      defrost: true,
       compresor: false,
-      status: true
-    },
-    {
-      name: "001",
-      generalStatus: "error",
-      temp: -15,
-      defrost: false,
-      compresor: true,
-      status: false
-    },
-    {
-      name: "002",
-      generalStatus: "error",
-      temp: -8,
+      evaporacion: false,
       defrost: true,
-      compresor: true,
-      status: true
+      arranqueComp: false,
+      bateria: true,
+      alarma: true,
+      alerta: true
     },
     {
-      name: "003",
-      generalStatus: "Ok",
-      temp: -20,
-      defrost: false,
+      displayName: "001",
+      temp: -10,
       compresor: false,
-      status: true
-    },
-    {
-      name: "004",
-      generalStatus: "error",
-      temp: -12,
+      evaporacion: false,
       defrost: true,
+      arranqueComp: false,
+      bateria: true,
+      alarma: false,
+      alerta: true
+    },
+    {
+      displayName: "002",
+      temp: -10,
       compresor: false,
-      status: false
+      evaporacion: false,
+      defrost: true,
+      arranqueComp: false,
+      bateria: true,
+      alarma: false,
+      alerta: false
     }
   ];
   
 
   return (
     <>
-      <div className="flex flex-col items-center space-y-4">
-            {userContainerInfo.map((item, index) => (
-                <Container
-                    key={index}
-                    generalStatus={item.generalStatus}
-                    name={item.name}
-                    temp={item.temp}
-                    defrost={item.defrost}
-                    status={item.status}
-                    compresor={item.compresor}
-                />
-            ))}
-        </div>
+      <div className="min-h-screen bg-gradient-to-br from-gray-300 to-gray-600">
+        <div className="flex flex-col items-center space-y-4">
+              {userContainerInfo.map((item, index) => (
+                  <Container
+                      key={index}
+                      displayName={item.displayName}
+                      temp={item.temp}
+                      compresor={item.compresor}
+                      evaporacion={item.status}
+                      defrost={item.defrost}
+                      arranqueComp={item.arranqueComp}
+                      bateria={item.bateria}
+                      alarma={item.alarma}
+                      alerta={item.alerta}
+                  />
+              ))}
+          </div>
+      </div>
     </>
   )
 }

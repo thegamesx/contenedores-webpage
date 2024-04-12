@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-const Container = ({ temp, defrost, status, compresor, name: initialName, generalStatus }) => {
+const Container = ({ displayName, temp, compresor, evaporacion, defrost, arranqueComp, bateria, alarma, alerta }) => {
     // Nombre inicial del contenedor
-    const [name, setName] = useState(initialName);
+    const [name, setName] = useState(displayName);
     // Estado para controlar la visibilidad de la información detallada
     const [isExpanded, setIsExpanded] = useState(false);
 
@@ -22,7 +22,7 @@ const Container = ({ temp, defrost, status, compresor, name: initialName, genera
 
     // Funcion para renderizar el icono y la etiqueta de error
 const renderStatusIconAndLabel = () => {
-    if (generalStatus === "error") {
+    if (alarma === true) {
         return (
             <div className="flex items-center mt-1 ml-4"> 
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#EF4444" className="w-6 h-6 mr-1">
@@ -31,6 +31,15 @@ const renderStatusIconAndLabel = () => {
                 <span className="font-bold text-red-600">ERROR</span>
             </div>
         );
+    } else if(alerta === true){
+        return(
+            <div className="flex items-center mt-1 ml-4">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#F59E0B" className="w-6 h-6 mr-1">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                </svg>
+                <span className="font-semibold text-yellow-500">WARNING</span>
+            </div>
+        )
     }
     return null;
 };
@@ -67,9 +76,9 @@ const renderStatusIconAndLabel = () => {
             </div>
             {/* Mostrar la información detallada si está expandida */}
             {isExpanded && (
-                <div className="flex flex-col p-4 bg-black text-white">
+                <div className="flex flex-col p-4 font-mono bg-black text-white">
                     <div className="flex justify-between mb-4">
-                        <span>Temperature:</span>
+                        <span>Temperatura:</span>
                         <span className={temp ? "text-green-600" : "text-red-600"}>{temp}°C</span>
                     </div>
                     <div className="flex justify-between mb-4">
@@ -77,12 +86,20 @@ const renderStatusIconAndLabel = () => {
                         <span className={defrost ? "text-green-600" : "text-red-600"}>{defrost ? "Currently defrosting" : "Not defrosting"}</span>
                     </div>
                     <div className="flex justify-between mb-4">
-                        <span>Status:</span>
-                        <span className={status ? "text-green-600" : "text-red-600"}>{status ? "On" : "Off"}</span>
+                        <span>Compresor:</span>
+                        <span className={compresor ? "text-green-600" : "text-red-600"}>{compresor ? "Working" : "Not working"}</span>
+                    </div>
+                    <div className="flex justify-between mb-4">
+                        <span>Evaporacion:</span>
+                        <span className={evaporacion ? "text-green-600" : "text-red-600"}>{evaporacion ? "On" : "Off"}</span>
+                    </div>
+                    <div className="flex justify-between mb-4">
+                        <span>Arranque Componente?:</span>
+                        <span className={arranqueComp ? "text-green-600" : "text-red-600"}>{arranqueComp ? "On" : "Off"}</span>
                     </div>
                     <div className="flex justify-between">
-                        <span>Compressor:</span>
-                        <span className={compresor ? "text-green-600" : "text-red-600"}>{compresor ? "Working" : "Not working"}</span>
+                        <span>Bateria:</span>
+                        <span className={bateria ? "text-green-600" : "text-red-600"}>{bateria ? "On" : "Off"}</span>
                     </div>
                 </div>
             )}
