@@ -46,7 +46,7 @@ const renderStatusIconAndLabel = () => {
 
 
     return (
-        <div className="border-2 rounded-lg shadow-lg overflow-hidden w-full sm:w-2/5 md:w-3/10 lg:w-2/10 mt-4">
+        <div className="rounded-lg shadow-lg overflow-hidden w-full sm:w-2/5 md:w-3/10 lg:w-2/10 mt-4">
             <div className="bg-blue-700 text-white py-2 px-4">
                 <div className="flex items-center justify-between">
                     <div className="text-lg font-semibold flex items-center">
