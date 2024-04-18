@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Container = ({ displayName, temp, compresor, evaporacion, defrost, arranqueComp, bateria, alarma, alerta }) => {
+const Container = ({ displayName, temp, compresor, evaporacion, defrost, arranque_comp, bateria, alarma, defrost_status }) => {
     // Nombre inicial del contenedor
     const [name, setName] = useState(displayName);
     // Estado para controlar la visibilidad de la información detallada
@@ -31,7 +31,7 @@ const renderStatusIconAndLabel = () => {
                 <span className="font-bold text-red-600">ERROR</span>
             </div>
         );
-    } else if(alerta === true){
+    } else if(defrost_status === true){
         return(
             <div className="flex items-center mt-1 ml-4">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#F59E0B" className="w-6 h-6 mr-1">
@@ -95,7 +95,7 @@ const renderStatusIconAndLabel = () => {
                     </div>
                     <div className="flex justify-between mb-4">
                         <span>Arranque Componente?:</span>
-                        <span className={arranqueComp ? "text-green-600" : "text-red-600"}>{arranqueComp ? "On" : "Off"}</span>
+                        <span className={arranque_comp ? "text-green-600" : "text-red-600"}>{arranque_comp ? "On" : "Off"}</span>
                     </div>
                     <div className="flex justify-between">
                         <span>Bateria:</span>

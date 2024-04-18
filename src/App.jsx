@@ -1,49 +1,34 @@
-import React, { useEffect } from "react";
+import React, {  useEffect, useState } from "react";
 import Container from "./components/Container";
 import Navbar from "./components/Navbar";
+import Login from "./components/Login"
 
 function App() {
-  const userContainerInfo = [
-    {
-      displayName: "000",
-      temp: -10,
-      compresor: false,
-      evaporacion: false,
-      defrost: true,
-      arranqueComp: false,
-      bateria: true,
-      alarma: true,
-      alerta: true,
-    },
-    {
-      displayName: "001",
-      temp: -10,
-      compresor: false,
-      evaporacion: false,
-      defrost: true,
-      arranqueComp: false,
-      bateria: true,
-      alarma: false,
-      alerta: true,
-    },
-    {
-      displayName: "002",
-      temp: -10,
-      compresor: false,
-      evaporacion: false,
-      defrost: true,
-      arranqueComp: false,
-      bateria: true,
-      alarma: false,
-      alerta: false,
-    },
-  ];
+  const [userContainerInfo, setUserContainerInfo] = useState([]);
+
+  const API_URL = "http://localhost:3000/api/data";
+
+  const fetchData = ()=>{
+    fetch(API_URL)
+      .then(response => response.json())
+      .then(data => {
+        setUserContainerInfo(data);
+        
+      })
+      .catch(error => {
+        console.error('Error fetcheando la data:', error);
+      });
+  }
+
+  useEffect(() => {
+    fetchData()  
+  }, []);
 
   let notificationSent = false;
 
   useEffect(() => {
     if (!("Notification" in window)) {
-      console.log("This browser does not support desktop notifications");
+      console.log("Este navegador no soporta notificaciones de escritorio");
       return;
     }
 
@@ -63,22 +48,23 @@ function App() {
   return (
     <>
       <div className="relative">
-        <Navbar />
+        <Navbar fetchData={fetchData} />
+        
         <div className="min-h-screen bg-gradient-to-br from-gray-700 to-gray-900 pt-16">
           <div className="flex flex-col items-center space-y-4">
             {userContainerInfo.map((item, index) => (
               <Container
                 key={index}
-                displayName={item.displayName}
+                displayName={item.name}
                 temp={item.temp}
                 compresor={item.compresor}
                 evaporacion={item.status}
                 defrost={item.defrost}
-                arranqueComp={item.arranqueComp}
+                arranque_comp={item.arranque_comp}
                 bateria={item.bateria}
                 alarma={item.alarma}
-                alerta={item.alerta}
-              />
+                defrost_status={item.defrost_status}
+            />
             ))}
           </div>
         </div>
