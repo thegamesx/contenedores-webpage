@@ -4,46 +4,53 @@ import Navbar from "./components/Navbar";
 import Login from "./components/Login"
 
 function App() {
-  const [userContainerInfo, setUserContainerInfo] = useState([]);
+  const [userContainerInfo, setUserContainerInfo] = useState(null);
 
-  const API_URL = "http://localhost:3000/api/data";
+  const API_URL = "https://containerapi-9rk1ynra.b4a.run/client/status/2";
 
-  const fetchData = ()=>{
+  const fetchData = () => {
     fetch(API_URL)
       .then(response => response.json())
       .then(data => {
-        setUserContainerInfo(data);
-        
+        setUserContainerInfo(data.status.contList);
       })
       .catch(error => {
-        console.error('Error fetcheando la data:', error);
+        console.error('Error fetching data:', error);
       });
   }
 
   useEffect(() => {
-    fetchData()  
+    fetchData();  
   }, []);
 
   let notificationSent = false;
 
   useEffect(() => {
+    if (!userContainerInfo) {
+      // If userContainerInfo is null, return early
+      return;
+    }
+
     if (!("Notification" in window)) {
       console.log("Este navegador no soporta notificaciones de escritorio");
       return;
     }
 
-    // Checkea si alguna alarma esta encendida
-    const hasAlarma = userContainerInfo.some((item) => item.alarma);
+    // Check if any alarm is activated
+    const hasAlarm = userContainerInfo.some((item) => item.alarma);
 
-    // Si al menos una esta entendida, envia notificacion al escritorio
-    if (hasAlarma && Notification.permission === "granted" && !notificationSent) {
-      // Crea y muestra la notificacion
+    // If at least one alarm is activated, send notification to the desktop
+    if (hasAlarm && Notification.permission === "granted" && !notificationSent) {
+      // Create and show the notification
       new Notification("Alarma activada", {
         body: "Al menos una alarma está activada",
       });
       notificationSent = true;
     }
   }, [userContainerInfo]);
+
+  
+
 
   return (
     <>
@@ -52,7 +59,12 @@ function App() {
         
         <div className="min-h-screen bg-gradient-to-br from-gray-700 to-gray-900 pt-16">
           <div className="flex flex-col items-center space-y-4">
-            {userContainerInfo.map((item, index) => (
+            {(userContainerInfo === null ?
+            <div>
+              Loading...
+            </div>
+            :
+            userContainerInfo.map((item, index) => (
               <Container
                 key={index}
                 displayName={item.name}
@@ -64,8 +76,9 @@ function App() {
                 bateria={item.bateria}
                 alarma={item.alarma}
                 defrost_status={item.defrost_status}
-            />
-            ))}
+              />
+            ))
+            )}
           </div>
         </div>
       </div>
@@ -74,3 +87,4 @@ function App() {
 }
 
 export default App;
+
