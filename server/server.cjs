@@ -5,41 +5,46 @@ const app = express();
 app.use(cors()); // Enable CORS for all routes
 
 // Define the data
-const data = [
-  {
-    name: "000",
-    temp: -10,
-    compresor: false,
-    evaporacion: false,
-    defrost: true,
-    arranque_comp: false,
-    bateria: true,
-    alarma: false,
-    defrost_status: true,
-  },
-  {
-    name: "001",
-    temp: -18,
-    compresor: false,
-    evaporacion: false,
-    defrost: true,
-    arranque_comp: true,
-    bateria: true,
-    alarma: false,
-    defrost_status: false,
-  },
-  {
-    name: "002",
-    temp: -10,
-    compresor: false,
-    evaporacion: false,
-    defrost: true,
-    arranque_comp: false,
-    bateria: true,
-    alarma: true,
-    defrost_status: true,
-  },
-];
+const data = {
+  status: {
+    contList:[
+      {
+        name: "000",
+        temp: -10,
+        compresor: false,
+        evaporacion: false,
+        defrost: true,
+        arranque_comp: false,
+        bateria: true,
+        alarma: false,
+        defrost_status: true,
+      },
+      {
+        name: "001",
+        temp: -18,
+        compresor: false,
+        evaporacion: false,
+        defrost: true,
+        arranque_comp: true,
+        bateria: true,
+        alarma: false,
+        defrost_status: false,
+      },
+      {
+        name: "002",
+        temp: -10,
+        compresor: false,
+        evaporacion: false,
+        defrost: true,
+        arranque_comp: false,
+        bateria: true,
+        alarma: true,
+        defrost_status: true,
+      }
+    ]
+    
+  }
+};
 
 // Define a route to handle GET requests
 app.get('/api/data', (req, res) => {
