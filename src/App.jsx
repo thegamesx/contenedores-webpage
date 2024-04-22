@@ -2,6 +2,7 @@ import React, {  useEffect, useState } from "react";
 import Container from "./components/Container";
 import Navbar from "./components/Navbar";
 import Login from "./components/Login"
+import AdminPanel from "./components/AdminPanel";
 
 function App() {
   const [userContainerInfo, setUserContainerInfo] = useState(null);
@@ -71,6 +72,7 @@ function App() {
     <>
       <div className="relative">
         <Navbar fetchData={fetchData} />
+        <AdminPanel></AdminPanel>
         
         <div className="min-h-screen bg-gradient-to-br from-gray-700 to-gray-900 flex justify-center items-center">
           <div className="max-w-screen-xl w-full px-4">
