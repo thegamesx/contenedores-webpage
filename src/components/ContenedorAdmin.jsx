@@ -31,12 +31,12 @@ const ContenedorAdmin = ({ nombre, listaDeVigias }) => {
       </div>
       {isExpanded && (
         <>
-          {/* Button to open the modal */}
-          <button onClick={toggleModal} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-6">
-            Agregar Vigia
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-6">
+            Cambiar Nombre
           </button>
           {/* Render the AgregarVigia modal component if isModalOpen is true */}
           {isModalOpen && <AgregarVigia onClose={toggleModal} />}
+          <h2 className='text-2xl'>Vigias con acceso al contenedor:</h2>
           <ul>
             {listaDeVigias.map((vigia, index) => (
               <li key={index} className="flex items-center justify-between mb-4 p-2 bg-gray-100 rounded">
@@ -55,6 +55,10 @@ const ContenedorAdmin = ({ nombre, listaDeVigias }) => {
               </li>
             ))}
           </ul>
+          {/* Button to open the modal */}
+          <button onClick={toggleModal} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-6">
+            Agregar Vigia
+          </button>
         </>
       )}
     </div>

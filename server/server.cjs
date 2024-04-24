@@ -6,45 +6,59 @@ app.use(cors()); // Enable CORS for all routes
 
 // Define the data
 const data = {
-  status: {
-    contList:[
+  "status": {
+    "statusList": [
       {
-        name: "000",
-        temp: -10,
-        compresor: false,
-        evaporacion: false,
-        defrost: true,
-        arranque_comp: false,
-        bateria: true,
-        alarma: false,
-        defrost_status: true,
+        "status": {
+          "cont_id": 258,
+          "name": "Sin nombre",
+          "temp": 25,
+          "defrost": true,
+          "arranque_comp": false,
+          "bateria": true,
+          "alarma": true,
+          "defrost_status": false
+        },
+        "clients": [
+          {
+            "name": "Nuevo cliente",
+            "id": 58
+          },
+          {
+            "name": "Test 2",
+            "id": 2
+          }
+        ]
       },
       {
-        name: "001",
-        temp: -18,
-        compresor: false,
-        evaporacion: false,
-        defrost: true,
-        arranque_comp: true,
-        bateria: true,
-        alarma: false,
-        defrost_status: false,
-      },
-      {
-        name: "002",
-        temp: -10,
-        compresor: false,
-        evaporacion: false,
-        defrost: true,
-        arranque_comp: false,
-        bateria: true,
-        alarma: true,
-        defrost_status: true,
+        "status": {
+          "cont_id": 1,
+          "name": "Test",
+          "temp": 21.38,
+          "defrost": false,
+          "arranque_comp": false,
+          "bateria": false,
+          "alarma": true,
+          "defrost_status": true
+        },
+        "clients": [
+          {
+            "name": "Test",
+            "id": 123456
+          },
+          {
+            "name": "Test 2",
+            "id": 2
+          },
+          {
+            "name": "Testeando link",
+            "id": 123
+          }
+        ]
       }
     ]
-    
   }
-};
+}
 
 // Define a route to handle GET requests
 app.get('/api/data', (req, res) => {

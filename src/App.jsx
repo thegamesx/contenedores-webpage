@@ -12,25 +12,25 @@ function App() {
   const API_URL = "https://containerapi-9rk1ynra.b4a.run/";
   
   const fetchData = () => {
-    setLoading(true); // Set loading state to true when fetching data
-    setError(false); // Reset error state
+    setLoading(true); // Setea loading en true cuando se esta fetcheando
+    setError(false); 
   
     //fetch(API_URL + "client/status/2")
-    fetch("https://localhost:3000/api/data")
+    fetch("http://localhost:3000/api/data")
     .then(response => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error('Error de red');
         }
         return response.json();
       })
       .then(data => {
-        setUserContainerInfo(data.status.contList);
-        setLoading(false); // Set loading state to false when data is fetched
+        setUserContainerInfo(data.status.statusList.map(contStatus => contStatus.status));
+        setLoading(false); // Cambia el estado de loading a false cuando fetchea la data
       })
       .catch(error => {
         console.error('Error fetching data:', error);
-        setError(true); // Set error state to true if there's an error
-        setLoading(false); // Set loading state to false in case of error
+        setError(true); 
+        setLoading(false); // En caso de error, setea loading en false
       });
   }
   
@@ -43,7 +43,7 @@ function App() {
 
   useEffect(() => {
     if (!userContainerInfo) {
-      // If userContainerInfo is null, return early
+      // Si no hay error, retorna antes de la ejecucion del resto del codigo
       return;
     }
 
@@ -52,12 +52,12 @@ function App() {
       return;
     }
 
-    // Check if any alarm is activated
+    // checkea si hay una alarma encendida
     const hasAlarm = userContainerInfo.some((item) => item.alarma);
 
-    // If at least one alarm is activated, send notification to the desktop
+    // Si la hay, envia una notificacion al escritorio
     if (hasAlarm && Notification.permission === "granted" && !notificationSent) {
-      // Create and show the notification
+      // crear y mostrar la notificacion
       new Notification("Alarma activada", {
         body: "Al menos una alarma está activada",
       });
@@ -88,6 +88,7 @@ function App() {
             ) : (
               <div className="flex justify-center">
                 <div className="grid grid-cols-1 gap-4 w-full">
+                  {/*Se mapea la informacion de los contenedores*/}
                   {userContainerInfo.map((item, index) => (
                     <div key={index} className="flex justify-center">
                       <Container
