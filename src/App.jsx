@@ -14,7 +14,7 @@ function App() {
   const fetchData = () => {
     setLoading(true); // Setea loading en true cuando se esta fetcheando
     setError(false); 
-  
+    
     //fetch(API_URL + "client/status/2")
     fetch("http://localhost:3000/api/data")
     .then(response => {

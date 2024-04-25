@@ -55,13 +55,14 @@ const AdminPanel = () =>{
               </div>
               <div className="mb-4">
                 <label htmlFor="vigias" className="block text-sm font-semibold mb-2">Vigias a agregar:</label>
-                {/* Assuming you have a select input for users */}
+                {/* Asumiendo que existen usuarios */}
                 <select id="vigias" name="vigias" className="w-full px-3 py-2 border border-gray-300 rounded-md">
-                  {/* Options for users */}
+                  {/* Usuarios disponibles */}
                 </select>
                 <div className="mb-4">
                   <label className="block text-sm font-semibold mb-2">Usuarios seleccionados:</label>
                   <ul>
+                    {/* Renderiza los usuarios agregados hasta el momento*/}
                     {selectedUsers.map((user, index) => (
                       <li key={index} className="flex items-center justify-between py-1">
                         <span>{user}</span>
