@@ -42,27 +42,15 @@ const ContenedorAdmin = ({ nombre, listaDeVigias }) => {
               <li key={index} className="flex items-center justify-between mb-4 p-2 bg-gray-100 rounded">
                 <span className="text-lg">{vigia}</span>
                 <button className="text-red-500">
-                   <div className="mb-4">
-            <label className="block text-sm font-semibold mb-2">Usuarios seleccionados:</label>
-            <ul>
-              {selectedUsers.map((user, index) => (
-                <li key={index} className="flex items-center justify-between py-1">
-                  <span>{user}</span>
-                  <button type="button" onClick={() => this.removeUserFromList(index)}>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
                 </button>
               </li>
             ))}
