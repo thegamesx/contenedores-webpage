@@ -46,7 +46,7 @@ const AdminPanel = () =>{
         <>
         <div className="py-32">
             <div className="flex flex-col">
-            <div className="border-black border-2 h-auto w-1/2 m-auto p-4">
+            <div className=" h-auto w-1/2 m-auto p-4">
             <h2 className="text-center text-4xl font-semibold py-4">Agregar un contenedor:</h2>
             <form>
               <div className="mb-4">
