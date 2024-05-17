@@ -9,9 +9,8 @@ import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Auth0Provider
-    domain={"dev-yllq83uuhnz8m2y5.us.auth0.com"}
-    clientId={"WRp4S6TV8fyapby3mnfU3mt4jnKGUFzw"}
-    redirect_uri={window.location.origin}
+    domain={"dev-j84dukhxiu3f6z5d.us.auth0.com"}
+    clientId={"Z0FAxoijbyHTACSLyCDGWsHMiYRV0R2G"}
     authorizationParams={{
       redirect_uri: window.location.origin
     }}

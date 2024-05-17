@@ -5,7 +5,7 @@ const LoginButton = () => {
 
     return(
         !isAuthenticated && (
-            <button onClick={()=> loginWithRedirect()}>
+            <button className="h-16 w-32 bg-white border-2 border-black" onClick={()=> loginWithRedirect()}>
                 Sign In
             </button>
         )
