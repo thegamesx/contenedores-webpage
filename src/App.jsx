@@ -4,18 +4,53 @@ import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import AdminPanel from "./components/AdminPanel";
 import Login from "./components/Login";
-import { useAuth0 } from "@auth0/auth0-react"; // Import Auth0 hooks
+import NonAuthenticatedUser from "./components/NonAuthenticatedUser";
+import { useAuth0 } from "@auth0/auth0-react";
+import axios from "axios";
 
 function App() {
-  const { isAuthenticated, isLoading } = useAuth0(); // Check if user is authenticated
+  const { user, isAuthenticated, isLoading, getIdTokenClaims } = useAuth0();
   const [isAuthenticatedState, setIsAuthenticatedState] = useState(false);
+  const [userExists, setUserExists] = useState(null);
 
   useEffect(() => {
-    setIsAuthenticatedState(isAuthenticated);
-  }, [isAuthenticated]);
+    const authenticateUser = async () => {
+      if (isAuthenticated) {
+        const token = await getIdTokenClaims();
+        try {
+          // Check if the user exists in the backend
+          const accountResponse = await axios.get(`/client/account?id=${user.sub}`, {
+            headers: {
+              Authorization: `Bearer ${token.__raw}`
+            }
+          });
+
+          if (accountResponse.data.status === "El usuario existe") {
+            setUserExists(true);
+            setIsAuthenticatedState(true);
+          } else {
+            setUserExists(false);
+          }
+        } catch (error) {
+          if (error.response && error.response.status === 403) {
+            console.error("User not authenticated:", error.response.data.detail);
+            setUserExists(false);
+          } else {
+            console.error("Error checking or creating user:", error);
+          }
+        }
+      }
+    };
+
+    authenticateUser();
+  }, [isAuthenticated, user, getIdTokenClaims]);
 
   if (isLoading) {
     return <div>Loading...</div>;
+  }
+
+  if (userExists === false) {
+    return <NonAuthenticatedUser />;
   }
 
   return (
