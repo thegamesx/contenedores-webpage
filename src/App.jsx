@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import AdminPanel from "./components/AdminPanel";
@@ -9,72 +9,71 @@ import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 
 function App() {
-  const { user, isAuthenticated, isLoading, getIdTokenClaims } = useAuth0();
-  const [isAuthenticatedState, setIsAuthenticatedState] = useState(false);
-  const [userExists, setUserExists] = useState(null);
+    const { user, isAuthenticated, isLoading, getIdTokenClaims, getAccessTokenSilently } = useAuth0();
+    const [isAuthenticatedState, setIsAuthenticatedState] = useState(false);
+    const [userExists, setUserExists] = useState(null);
 
-  useEffect(() => {
-    const authenticateUser = async () => {
-      if (isAuthenticated) {
-        const token = await getIdTokenClaims();
-        try {
-          // Check if the user exists in the backend
-          const accountResponse = await axios.get(`/client/account?id=${user.sub}`, {
-            headers: {
-              Authorization: `Bearer ${token.__raw}`
+    useEffect(() => {
+        const authenticateUser = async () => {
+            if (isAuthenticated) {
+                const token = await getIdTokenClaims();
+                const accessToken = await getAccessTokenSilently();
+                console.log(accessToken);
+                try {
+                    // Check if the user exists in the backend
+                    const accountResponse = await axios.get(`/client/account?id=${user.sub}`, {
+                        headers: {
+                            Authorization: `Bearer ${accessToken}`
+                        }
+                    });
+
+                    if (accountResponse.data.status === "El usuario existe") {
+                        setUserExists(true);
+                        setIsAuthenticatedState(true);
+                    } else {
+                        setUserExists(false);
+                    }
+                } catch (error) {
+                    if (error.response && error.response.status === 403) {
+                        console.error("User not authenticated:", error.response.data.detail);
+                        setUserExists(false);
+                    } else {
+                        console.error("Error checking or creating user:", error);
+                    }
+                }
             }
-          });
-
-          if (accountResponse.data.status === "El usuario existe") {
-            setUserExists(true);
-            setIsAuthenticatedState(true);
-          } else {
-            setUserExists(false);
-          }
-        } catch (error) {
-          if (error.response && error.response.status === 403) {
-            console.error("User not authenticated:", error.response.data.detail);
-            setUserExists(false);
-          } else {
-            console.error("Error checking or creating user:", error);
-          }
         }
-      }
-    };
+        authenticateUser();
+    }, [isAuthenticated, user, getIdTokenClaims, getAccessTokenSilently]);
 
-    authenticateUser();
-  }, [isAuthenticated, user, getIdTokenClaims]);
-
-  if (isLoading) {
+    if (isLoading) {
     return <div>Loading...</div>;
-  }
+    }
 
-  if (userExists === false) {
+    if (userExists === false) {
     return <NonAuthenticatedUser />;
-  }
+    }
 
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={isAuthenticatedState ? <Navigate to="/home" /> : <Login />}
-        />
-        <Route
-          path="/home"
-          element={
-            isAuthenticatedState ? <HomeWithNavbar /> : <Navigate to="/" />
-          }
-        />
-        <Route
-          path="/admin"
-          element={
-            isAuthenticatedState ? <AdminPanelWithNavbar /> : <Navigate to="/" />
-          }
-        />
-      </Routes>
-    </BrowserRouter>
-  );
+    return (
+        <Routes>
+            <Route
+                path="/"
+                element={isAuthenticatedState ? <Navigate to="/home" /> : <Login />}
+            />
+            <Route
+                path="/home"
+                element={
+                isAuthenticatedState ? <HomeWithNavbar /> : <Navigate to="/" />
+                }
+            />
+            <Route
+                path="/admin"
+                element={
+                isAuthenticatedState ? <AdminPanelWithNavbar /> : <Navigate to="/" />
+                }
+            />
+        </Routes>
+    );
 }
 
 function HomeWithNavbar() {
