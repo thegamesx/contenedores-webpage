@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
+import { PageLoader } from "./components/page-loader";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import AdminPanel from "./components/AdminPanel";
@@ -7,6 +8,7 @@ import Login from "./components/Login";
 import NonAuthenticatedUser from "./components/NonAuthenticatedUser";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
+import "./App.css" //Revisar esto
 
 function App() {
     const { user, isAuthenticated, isLoading, getIdTokenClaims, getAccessTokenSilently } = useAuth0();
@@ -47,7 +49,10 @@ function App() {
     }, [isAuthenticated, user, getIdTokenClaims, getAccessTokenSilently]);
 
     if (isLoading) {
-    return <div>Loading...</div>;
+        return (
+            <div className="centered">
+                <PageLoader />
+            </div>);
     }
 
     if (userExists === false) {

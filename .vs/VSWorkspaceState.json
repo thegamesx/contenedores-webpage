@@ -1,8 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\src"
+    "\\src",
+    "\\src\\assets",
+    "\\src\\components",
+    "\\src\\components\\navigation"
   ],
-  "SelectedNode": "\\README.md",
+  "SelectedNode": "\\.eslintrc.cjs",
   "PreviewInSolutionExplorer": false
 }

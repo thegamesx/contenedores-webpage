@@ -2,65 +2,66 @@ import React, {  useEffect, useState } from "react";
 import Container from "./Container";
 
 function Home(){
-  const [userContainerInfo, setUserContainerInfo] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+    const [userContainerInfo, setUserContainerInfo] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
 
-  const API_URL = "https://containerapi-9rk1ynra.b4a.run/";
-  
-  const fetchData = () => {
-    setLoading(true); // Setea loading en true cuando se esta fetcheando
-    setError(false); 
+    const API_URL = import.meta.env.VITE_API_SERVER_URL;
     
-    //fetch(API_URL + "client/status/2")
-    fetch("http://localhost:3000/api/data")
-    .then(response => {
-        if (!response.ok) {
-          throw new Error('Error de red');
-        }
-        return response.json();
-      })
-      .then(data => {
-        setUserContainerInfo(data.status.statusList.map(contStatus => contStatus.status));
-        setLoading(false); // Cambia el estado de loading a false cuando fetchea la data
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-        setError(true); 
-        setLoading(false); // En caso de error, setea loading en false
-      });
-  }
+  
+      const fetchData = () => {
+        setLoading(true); // Setea loading en true cuando se esta fetcheando
+        setError(false); 
+    
+        //fetch(API_URL + "client/status/2")
+        fetch("http://localhost:3000/api/data")
+        .then(response => {
+            if (!response.ok) {
+              throw new Error('Error de red');
+            }
+            return response.json();
+          })
+          .then(data => {
+            setUserContainerInfo(data.status.statusList.map(contStatus => contStatus.status));
+            setLoading(false); // Cambia el estado de loading a false cuando fetchea la data
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+            setError(true); 
+            setLoading(false); // En caso de error, setea loading en false
+          });
+      }
   
 
-  useEffect(() => {
-    fetchData();  
-  }, []);
+      useEffect(() => {
+        fetchData();  
+      }, []);
 
-  let notificationSent = false;
+      let notificationSent = false;
 
-  useEffect(() => {
-    if (!userContainerInfo) {
-      // Si no hay error, retorna antes de la ejecucion del resto del codigo
-      return;
-    }
+      useEffect(() => {
+        if (!userContainerInfo) {
+          // Si no hay error, retorna antes de la ejecucion del resto del codigo
+          return;
+        }
 
-    if (!("Notification" in window)) {
-      console.log("Este navegador no soporta notificaciones de escritorio");
-      return;
-    }
+        if (!("Notification" in window)) {
+          console.log("Este navegador no soporta notificaciones de escritorio");
+          return;
+        }
 
-    // checkea si hay una alarma encendida
-    const hasAlarm = userContainerInfo.some((item) => item.alarma);
+        // checkea si hay una alarma encendida
+        const hasAlarm = userContainerInfo.some((item) => item.alarma);
 
-    // Si la hay, envia una notificacion al escritorio
-    if (hasAlarm && Notification.permission === "granted" && !notificationSent) {
-      // crear y mostrar la notificacion
-      new Notification("Alarma activada", {
-        body: "Al menos una alarma está activada",
-      });
-      notificationSent = true;
-    }
-  }, [userContainerInfo]);  
+        // Si la hay, envia una notificacion al escritorio
+        if (hasAlarm && Notification.permission === "granted" && !notificationSent) {
+          // crear y mostrar la notificacion
+          new Notification("Alarma activada", {
+            body: "Al menos una alarma está activada",
+          });
+          notificationSent = true;
+        }
+      }, [userContainerInfo]);  
 
     return(
         <>
