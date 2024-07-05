@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import LogoutButton from './LogoutButton';
+import LogoutButton from '../buttons/LogoutButton';
 
 const Navbar = () => {
   return (
@@ -20,8 +20,9 @@ const Navbar = () => {
           className="bg-white text-blue-700 py-2 px-4 rounded-md mr-4"
         >
           Configuración
-        </NavLink>
-        <span className="mr-4">Bienvenido Usuario<LogoutButton></LogoutButton></span>
+              </NavLink>
+              {/* CAMBIAR USUARIO POR EL NOMBRE DEL USUARIO */}
+        <span className="mr-4">Bienvenido Usuario <LogoutButton /></span> 
       </div>
     </nav>
   );

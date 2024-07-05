@@ -1,4 +1,4 @@
-import LoginButton from "./LoginButton";
+import LoginButton from "../components/buttons/LoginButton";
 import React from "react";
 import { TEInput, TERipple } from "tw-elements-react";
 

@@ -1,8 +1,8 @@
 import React, {  useEffect, useState, useCallback } from "react";
-import Container from "./Container";
+import Container from "../components/Container";
 import { useAuth0 } from "@auth0/auth0-react";
 import { getContainerStatus } from '../services/requests-service'
-import { PageLoader } from './page-loader'
+import { PageLoader } from '../components/page-loader'
 
 function Home(){
     const [userContainerInfo, setUserContainerInfo] = useState(null);
@@ -72,11 +72,11 @@ function Home(){
     }, [getAccessTokenSilently, userContainerInfo]);
     */
 
-    useEffect(() =>
+    function fetchData()
     {
         let isMounted = true;
 
-        const fetchData = async () =>
+        const getContainerInfo = async () =>
         {
             const accessToken = await getAccessTokenSilently();
             const { data, error } = await getContainerStatus(accessToken);
@@ -98,13 +98,13 @@ function Home(){
             }
         };
 
-        fetchData();
+        getContainerInfo();
 
         return () =>
         {
             isMounted = false;
         };
-    }, [getAccessTokenSilently]);
+    }//, [getAccessTokenSilently]);
     /*
 
     NOTIFICACIONES. VER DESPUES
@@ -138,17 +138,19 @@ function Home(){
     }, [userContainerInfo]);  
 
     */
+    useEffect(() =>
+    {
+        let ignore = false;
+
+        if (!ignore) fetchData()
+        return () => { ignore = true; }
+    }, []);
+
 
     return(
         <>
             <div className="relative">
-            
                 <div className="min-h-screen bg-gradient-to-br  from-gray-700 to-gray-900 flex flex-col justify-center items-center">
-                    {/*  Botón de actualizar. Hacer andar despues de que muestre la pantalla correctamente
-                    <div className="flex justify-center">
-                        <button onClick={fetchData} className="bg-blue-800 text-2xl font-semibold text-white mb-8 py-3 px-6 rounded-md">Actualizar</button>
-                    </div>
-                    */}
                     <div className="centered">
                         {loading && (
                             <PageLoader />
@@ -158,22 +160,26 @@ function Home(){
                                 No se han encontrado contenedores vinculados a este usuario
                             </div>
                             ) : (
-                            <div className="flex justify-center">
-                                <div className="grid grid-cols-1 gap-4 w-full">
-                                {/*Se mapea la informacion de los contenedores*/}
-                                {userContainerInfo.map((item, index) => (
-                                    <div key={index} className="flex justify-center">
-                                    <Container
-                                        displayName={item.name}
-                                        temp={item.temp}
-                                        compresor={item.compresor}
-                                        evaporacion={item.status}
-                                        defrost={item.defrost}
-                                        arranque_comp={item.arranque_comp}
-                                        bateria={item.bateria}
-                                        alarma={item.alarma}
-                                        defrost_status={item.defrost_status}
-                                    />
+                                <div className="flex justify-center">
+                                    {/*  Botón de actualizar. Hacer andar, y acomodarlo como corresponde*/}
+                                    <div>
+                                        <button onClick={fetchData} className="bg-blue-800 text-2xl font-semibold text-white mb-8 py-3 px-6 rounded-md">Actualizar</button>
+                                    </div>
+                                    <div className="grid grid-cols-1 gap-4 w-full">
+                                    {/*Se mapea la informacion de los contenedores*/}
+                                    {userContainerInfo.map((item, index) => (
+                                        <div key={index} className="flex justify-center">
+                                        <Container
+                                            displayName={item.name}
+                                            temp={item.temp}
+                                            compresor={item.compresor}
+                                            evaporacion={item.status}
+                                            defrost={item.defrost}
+                                            arranque_comp={item.arranque_comp}
+                                            bateria={item.bateria}
+                                            alarma={item.alarma}
+                                            defrost_status={item.defrost_status}
+                                        />
                                     </div>
                                 ))}
                                 </div>

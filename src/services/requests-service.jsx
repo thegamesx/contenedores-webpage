@@ -23,11 +23,23 @@ export const getProtectedResource = async (accessToken,parameters,method="GET") 
 
 export const getContainerStatus = async (accessToken, specifyClient) =>
 {
+    // Luego agregar opciones para modificar los otros parametros
     if (specifyClient) {
-        return await getProtectedResource(accessToken, '/client/status/?user_id=${specifyClient}')
+        return await getProtectedResource(accessToken, `/client/status/?user_id=${specifyClient}`)
     }
     else {
-        return await getProtectedResource(accessToken, '/client/status/')
+        return await getProtectedResource(accessToken, `/client/status/`)
     }
     
+}
+
+export const linkContainer = async (accessToken, contID, contPassword, specifyClient) =>
+{
+    if (userID) {
+        return await getProtectedResource(accessToken, `/cont/link/?cont_id=${contID}&password=${contPassword}&user_id=${specifyClient}`, "POST")
+    }
+    else {
+        return await getProtectedResource(accessToken, `/cont/link/?cont_id=${contID}&password=${contPassword}`, "POST")
+    }
+
 }

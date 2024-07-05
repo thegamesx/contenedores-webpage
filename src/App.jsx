@@ -1,11 +1,10 @@
 import React, { useState, useEffect, Component } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { PageLoader } from "./components/page-loader";
-import Navbar from "./components/Navbar";
-import Home from "./components/Home";
-import AdminPanel from "./components/AdminPanel";
-import Login from "./components/Login";
-import NonAuthenticatedUser from "./components/NonAuthenticatedUser";
+import Navbar from "./components/navigation/Navbar";
+import Home from "./pages/Home";
+import AdminPanel from "./pages/AdminPanel";
+import Login from "./pages/Login";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 import { AuthenticationGuard } from "./components/authentication-guard"

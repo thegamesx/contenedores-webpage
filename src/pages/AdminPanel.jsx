@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import ContenedorAdmin from "./ContenedorAdmin";
+import ContenedorAdmin from "../components/ContenedorAdmin";
 
 
 
