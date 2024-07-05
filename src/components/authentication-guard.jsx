@@ -6,7 +6,7 @@ export const AuthenticationGuard = ({ component }) =>
 {
     const Component = withAuthenticationRequired(component, {
         onRedirecting: () => (
-            <div className="page-layout">
+            <div className="centered">
                 <PageLoader />
             </div>
         ),

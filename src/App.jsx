@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Component } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { PageLoader } from "./components/page-loader";
 import Navbar from "./components/Navbar";
@@ -8,6 +8,7 @@ import Login from "./components/Login";
 import NonAuthenticatedUser from "./components/NonAuthenticatedUser";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
+import { AuthenticationGuard } from "./components/authentication-guard"
 import "./App.css" //Revisar esto
 
 function App() {
@@ -15,6 +16,14 @@ function App() {
     const [isAuthenticatedState, setIsAuthenticatedState] = useState(false);
     const [userExists, setUserExists] = useState(null);
 
+    if (isLoading) {
+        return (
+            <div className="centered">
+                <PageLoader />
+            </div>);
+    }
+
+    /*
     useEffect(() => {
         const authenticateUser = async () => {
             if (isAuthenticated) {
@@ -47,35 +56,27 @@ function App() {
         }
         authenticateUser();
     }, [isAuthenticated, user, getIdTokenClaims, getAccessTokenSilently]);
-
-    if (isLoading) {
-        return (
-            <div className="centered">
-                <PageLoader />
-            </div>);
-    }
+    
+    
 
     if (userExists === false) {
-    return <NonAuthenticatedUser />;
+        return <NonAuthenticatedUser />;
     }
+    */
 
     return (
         <Routes>
             <Route
                 path="/"
-                element={isAuthenticatedState ? <Navigate to="/home" /> : <Login />}
+                element={<Login />}
             />
             <Route
                 path="/home"
-                element={
-                isAuthenticatedState ? <HomeWithNavbar /> : <Navigate to="/" />
-                }
+                element={<AuthenticationGuard component={ HomeWithNavbar }/>}
             />
             <Route
                 path="/admin"
-                element={
-                isAuthenticatedState ? <AdminPanelWithNavbar /> : <Navigate to="/" />
-                }
+                element={<AuthenticationGuard component={ AdminPanelWithNavbar }/>}
             />
         </Routes>
     );

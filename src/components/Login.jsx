@@ -1,16 +1,4 @@
 import LoginButton from "./LoginButton";
-
-function Login() {
-
-  return (
-    <div className="centered">
-      <LoginButton></LoginButton>
-    </div>
-  );
-}
-
-//export default Login;
-
 import React from "react";
 import { TEInput, TERipple } from "tw-elements-react";
 
