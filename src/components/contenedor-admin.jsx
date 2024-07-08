@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import AgregarVigia from './AgregarVigia'; 
+import AgregarVigia from './agregar-vigia'; 
 
 const ContenedorAdmin = ({ nombre, listaDeVigias }) => {
   const [isExpanded, setIsExpanded] = useState(true);

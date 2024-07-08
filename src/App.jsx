@@ -1,14 +1,14 @@
 import React, { useState, useEffect, Component } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { PageLoader } from "./components/page-loader";
-import Navbar from "./components/navigation/Navbar";
-import Home from "./pages/Home";
-import AdminPanel from "./pages/AdminPanel";
-import Login from "./pages/Login";
+import Navbar from "./components/navigation/navbar-desktop";
+import Home from "./pages/home";
+import AdminPanel from "./pages/admin-panel";
+import Login from "./pages/login";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from "axios";
 import { AuthenticationGuard } from "./components/authentication-guard"
-import "./App.css" //Revisar esto
+import "./app.css" //Revisar esto
 
 function App() {
     const { user, isAuthenticated, isLoading, getIdTokenClaims, getAccessTokenSilently } = useAuth0();
@@ -23,6 +23,9 @@ function App() {
     }
 
     /*
+
+    Programar esto luego. Hay que chequear si el usuario existe, y si no lo crea.
+
     useEffect(() => {
         const authenticateUser = async () => {
             if (isAuthenticated) {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import ContenedorAdmin from "../components/ContenedorAdmin";
+import ContenedorAdmin from "../components/contenedor-admin";
 
 
 
@@ -8,7 +8,7 @@ const AdminPanel = () =>{
     const [usersNames, setUsersNames] = useState(null)
     const [selectedUsers, setSelectedUsers] = useState(["Fulano","Mengano"]);
 
-
+    // Hay que cambiar todo esto. Poner las llamadas a la api en el archivo requests-service
     const fetchData = () => {
         //fetch(API_URL + "client/status/2")
         fetch("http://localhost:3000/api/data")

@@ -2,6 +2,7 @@ import { callExternalApi } from "./external-api-service";
 
 const apiServerUrl = import.meta.env.VITE_API_SERVER_URL;
 
+// Llama a la api usando un token de acceso.
 export const getProtectedResource = async (accessToken,parameters,method="GET") =>
 {
     const config = {

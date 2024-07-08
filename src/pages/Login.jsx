@@ -1,7 +1,8 @@
-import LoginButton from "../components/buttons/LoginButton";
+import LoginButton from "../components/buttons/login-button";
 import React from "react";
 import { TEInput, TERipple } from "tw-elements-react";
 
+// Hay que ver porque hay un bloque blanco en el fondo, y cambiar el estilo para que sea consistente con el resto del diseño.
 export default function ExampleV2()
 {
     return (

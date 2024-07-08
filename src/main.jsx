@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { Auth0ProviderWithNavigate } from "./auth0-provider-with-navigate.jsx";
-import App from './App.jsx'
+import App from './app.jsx'
 import './index.css'
 import "tw-elements-react/dist/css/tw-elements-react.min.css";
 
